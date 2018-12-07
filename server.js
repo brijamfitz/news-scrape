@@ -61,6 +61,16 @@ app.get("/scrape", function(req, res) {
 });
 
 // A GET route for getting all articles from the database
+app.get('/articles', function(req, res) {
+    db.Article.find({}, function(err, data) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(data);
+        }
+    });
+});
 
 // A GET route for getting a specific article by id and populating with comment
 
