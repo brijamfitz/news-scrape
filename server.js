@@ -1,14 +1,14 @@
-// Set up our dependencies
+// Set up dependencies
 var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-// Require our models
+// Require models
 var db = require("./models");
 
-// Set up our port
+// Set up PORT
 var PORT = 8080;
 
 // Initialize express
@@ -61,15 +61,14 @@ app.get("/scrape", function(req, res) {
 });
 
 // A GET route for getting all articles from the database
-app.get('/articles', function(req, res) {
-    db.Article.find({}, function(err, data) {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            res.json(data);
-        }
-    });
+app.get("/articles", function(req, res) {
+  db.Article.find({}, function(err, data) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(data);
+    }
+  });
 });
 
 // A GET route for getting a specific article by id and populating with comment
