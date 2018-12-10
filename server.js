@@ -24,12 +24,17 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to MongoDB
-var MONGODB_URI = "mongodb://heroku_cz9rn926:ki2uvaqnkaq0rg3qqhn44ssr09@ds237932.mlab.com:37932/heroku_cz9rn926" || "mongodb://localhost/newsScrape";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsScrape";
 
-mongoose.connect(
-  MONGODB_URI,
-  { useNewUrlParser: true }
-);
+// mongoose.connect(
+//   MONGODB_URI,
+//   { useNewUrlParser: true }
+// );
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true }, function (error) {
+    if (error) console.error(error);
+    else console.log('mongo connected');
+});
 
 // Routes
 // A GET route for scraping the news site
