@@ -24,10 +24,10 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to MongoDB
-var MONGOLAB_URI = process.env.MONGOLAB_URI || "mongodb://localhost/newsScrape";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsScrape";
 
 mongoose.connect(
-  MONGOLAB_URI,
+  MONGODB_URI,
   { useNewUrlParser: true }
 );
 
