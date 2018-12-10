@@ -24,17 +24,12 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to MongoDB
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsScrape";
+var MONGOLAB_URI = process.env.MONGOLAB_URI || "mongodb://localhost/newsScrape";
 
-// mongoose.connect(
-//   MONGODB_URI,
-//   { useNewUrlParser: true }
-// );
-
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true }, function (error) {
-    if (error) console.error(error);
-    else console.log('mongo connected');
-});
+mongoose.connect(
+  MONGOLAB_URI,
+  { useNewUrlParser: true }
+);
 
 // Routes
 // A GET route for scraping the news site
