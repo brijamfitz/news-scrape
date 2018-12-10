@@ -24,8 +24,10 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to MongoDB
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsScrape";
+
 mongoose.connect(
-  "mongodb://localhost/newsScrape",
+  MONGODB_URI,
   { useNewUrlParser: true }
 );
 
@@ -47,6 +49,9 @@ app.get("/scrape", function(req, res) {
       result.link = $(this)
         .find("a.js_entry-link")
         .attr("href");
+      result.image = $(this)
+        .find("img")
+        .attr("src");
 
       db.Article.create(result)
         .then(function(dbArticle) {
@@ -72,8 +77,34 @@ app.get("/articles", function(req, res) {
 });
 
 // A GET route for getting a specific article by id and populating with comment
+app.get("/articles/:id", function(req, res) {
+  db.Article.findOne({ _id: req.params.id })
+    .populate("comment")
+    .then(function(dbArticle) {
+      console.log(dbArticle);
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+});
 
 // A POST route for saving/updating a specific article's associated note
+app.post("/articles/:id", function(req, res) {
+  db.Comment.create(req.body).then(function(dbComment) {
+    db.Article.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: { comment: dbComment.id } },
+      { new: true }
+    )
+      .then(function(dbComment) {
+        res.json(dbComment);
+      })
+      .catch(function(err) {
+        res.json(dbComment);
+      });
+  });
+});
 
 // Start the server
 app.listen(PORT, function() {

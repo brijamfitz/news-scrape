@@ -12,6 +12,13 @@ var ArticleSchema = new Schema({
   },
   link: {
     type: String
+  },
+  image: {
+    type: String
+  },
+  comment: {
+    type: Schema.Types.ObjectId,
+    ref: "Comment"
   }
 });
 
