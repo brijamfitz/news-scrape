@@ -1,22 +1,16 @@
 <div class="home">
 
+    <div class="jumbotron jumbotron-fluid" style="text-align:center">
+        <h1 class="display-4">Onion Scrape</h1>
+        <h5>Extra! Extra! Get your fake news here!</h5>
+        <a class="btn btn-primary btn-lg" href="#" role="button" id="scrape">Scrape New Onion Articles!</a>
+    </div>
+
     <div class="container">
 
         <div class="row">
 
-            <div class="col-md-12">
-                <div class="jumbotron">
-                    <h1 class="display-4">Scraping Onions</h1>
-                    <hr class="my-4">
-                    <a class="btn btn-primary btn-lg" href="#" role="button" id="scrape">Scrape New Articles!</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-6" id="articles">
+            <div class="col-md-8" id="articles">
                 {{#each articles}}
                 <div class="card">
                     <div class="card-header">
@@ -24,14 +18,14 @@
                     </div>
                     <div class="card-body">
                         <p data-id="{{_id}}">{{summary}}</p>
-                        <button data-id="{{_id}}" id="comment">Comment</button>
+                        <button data-id="{{_id}}" id="comment" class="btn btn-primary btn-lg">Comment</button>
+                        {{!-- <div class="col-md-6" id="comments"></div> --}}
                     </div>
                 </div>
                 {{/each}}
             </div>
 
-            <div class="col-md-6" id="comments">
-            </div>
+            <div class="col-md-4" id="comments"></div>
 
         </div>
 

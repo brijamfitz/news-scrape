@@ -12,7 +12,7 @@ $(document).on("click", "#comment", function() {
     $("#comments").append("<input id='titleinput' name='title'>");
     $("#comments").append("<textarea id='bodyinput' name='body'></textarea>");
     $("#comments").append(
-      "<button data-id='" +
+      "<button class='btn btn-primary btn-lg' data-id='" +
         data._id +
         "' id='savecomment'>Save Comment</button>"
     );
