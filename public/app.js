@@ -1,4 +1,4 @@
-$(document).on("click", "p", function() {
+$(document).on("click", "#comment", function() {
   $("#comments").empty();
   var thisId = $(this).attr("data-id");
   console.log(thisId);
@@ -8,7 +8,7 @@ $(document).on("click", "p", function() {
     url: "/" + thisId
   }).then(function(data) {
     console.log(data);
-    $("#comments").append("<h2>" + data.title + "</h2>");
+    $("#comments").append("<h4>" + data.title + "</h4>");
     $("#comments").append("<input id='titleinput' name='title'>");
     $("#comments").append("<textarea id='bodyinput' name='body'></textarea>");
     $("#comments").append(

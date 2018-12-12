@@ -3,28 +3,36 @@
     <div class="container">
 
         <div class="row">
+
             <div class="col-md-12">
                 <div class="jumbotron">
                     <h1 class="display-4">Scraping Onions</h1>
                     <hr class="my-4">
-                    <p>Click the Scrape button for a fresh feed of today's Onion articles!</p>
-                    <a class="btn btn-primary btn-lg" href="#" role="button" id="scrape">Scrape</a>
+                    <a class="btn btn-primary btn-lg" href="#" role="button" id="scrape">Scrape New Articles!</a>
                 </div>
             </div>
+
         </div>
 
         <div class="row">
+
             <div class="col-md-6" id="articles">
                 {{#each articles}}
-                <li>
-                    <h3 data-id="{{_id}}"><a href="{{link}}" target="_blank">{{title}}</a></h3>
-                    <p data-id="{{_id}}">{{summary}}</p>
-                </li>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 data-id="{{_id}}"><a href="{{link}}" target="_blank">{{title}}</a></h4>
+                    </div>
+                    <div class="card-body">
+                        <p data-id="{{_id}}">{{summary}}</p>
+                        <button data-id="{{_id}}" id="comment">Comment</button>
+                    </div>
+                </div>
                 {{/each}}
             </div>
-            <div class="col-md-6" id="comments">
 
+            <div class="col-md-6" id="comments">
             </div>
+
         </div>
 
     </div>
