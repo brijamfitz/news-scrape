@@ -1,30 +1,3 @@
-$.getJSON("/articles", function(data) {
-  for (var i = 0; i < data.length; i++) {
-    var newDiv = $("<div>")
-      .addClass("article")
-      .append(
-        $("<p>")
-          .attr("data-id", data[i]._id)
-          .text(data[i].title)
-          .addClass("title"),
-        $("<p>")
-          .attr("data-id", data[i]._id)
-          .text(data[i].summary)
-          .addClass("summary"),
-        $("<a>")
-          .attr("href", data[i].link)
-          .text(data[i].link)
-          .addClass("link"),
-        $("<img>")
-          .attr("src", data[i].image)
-          .addClass("image"),
-        $("<br /><br />")
-      );
-
-    $("#articles").append(newDiv);
-  }
-});
-
 $(document).on("click", "p", function() {
   $("#comments").empty();
   var thisId = $(this).attr("data-id");
@@ -32,7 +5,7 @@ $(document).on("click", "p", function() {
 
   $.ajax({
     method: "GET",
-    url: "/articles/" + thisId
+    url: "/" + thisId
   }).then(function(data) {
     console.log(data);
     $("#comments").append("<h2>" + data.title + "</h2>");
@@ -58,17 +31,26 @@ $(document).on("click", "#savecomment", function() {
 
   $.ajax({
     method: "POST",
-    url: "/articles/" + thisId,
+    url: "/" + thisId,
     data: {
       title: $("#titleinput").val(),
       body: $("#bodyinput").val()
     }
-  })
-    .then(function(data) {
-      console.log(data);
-      $("#comments").empty();
-    });
+  }).then(function(data) {
+    console.log(data);
+    $("#comments").empty();
+  });
 
   $("#titleinput").val("");
   $("#bodyinput").val("");
+});
+
+// Scrape button event
+$("#scrape").on("click", function() {
+  $.ajax({
+    method: "GET",
+    url: "/scrape"
+  }).then(function(response) {
+    location.reload();
+  });
 });

@@ -71,18 +71,19 @@ app.get("/scrape", function(req, res) {
 });
 
 // A GET route for getting all articles from the database
-app.get("/articles", function(req, res) {
+app.get("/", function(req, res) {
   db.Article.find({}, function(err, data) {
+    console.log(data);
     if (err) {
       console.log(err);
     } else {
-      res.json(data);
+      res.render("index", { articles: data });
     }
   });
 });
 
 // A GET route for getting a specific article by id and populating with comment
-app.get("/articles/:id", function(req, res) {
+app.get("/:id", function(req, res) {
   db.Article.findOne({ _id: req.params.id })
     .populate("comment")
     .then(function(dbArticle) {
@@ -94,8 +95,8 @@ app.get("/articles/:id", function(req, res) {
     });
 });
 
-// A POST route for saving/updating a specific article's associated note
-app.post("/articles/:id", function(req, res) {
+// // A POST route for saving/updating a specific article's associated note
+app.post("/:id", function(req, res) {
   db.Comment.create(req.body).then(function(dbComment) {
     db.Article.findOneAndUpdate(
       { _id: req.params.id },
