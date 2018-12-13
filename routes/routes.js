@@ -79,17 +79,23 @@ module.exports = function(app, cheerio, axios) {
   });
 
   // A DELETE route for deleting a specific article's associated comment
-  app.delete("/:id", function(req, res) {
+  app.get("/:id", function(req, res) {
     console.log(req.body)
-      db.Comment.remove(req.body).then(function(dbComment) {
-        db.Article.findOneAndRemove(
-          { _id: req.params.id }
-        ).then(function(dbComment) {
-          res.json(dbComment)
-        }).catch(function(err) {
-          res.json(dbComment);
-        })
-      })
+    console.log(req.params.id);
+    db.Article.remove({"comment.title":req.body.title}).then(function(dbComment) {
+      res.json(dbComment)
+    }).catch(function(err) {
+      res.json(err)
+    })
+      // db.Comment.remove(req.body).then(function(dbComment) {
+      //   db.Article.findOneAndRemove(
+      //     { _id: req.params.id }
+      //   ).then(function(dbComment) {
+      //     res.json(dbComment)
+      //   }).catch(function(err) {
+      //     res.json(dbComment);
+      //   })
+      // })
   })
 
   // A GET route to displaying all comments
