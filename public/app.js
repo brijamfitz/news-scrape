@@ -1,3 +1,4 @@
+// Comment
 $(document).on("click", "#comment", function() {
   $("#comments").empty();
   var thisId = $(this).attr("data-id");
@@ -16,6 +17,9 @@ $(document).on("click", "#comment", function() {
         data._id +
         "' id='savecomment'>Save Comment</button>"
     );
+    $("#comments").append("<button class='btn btn-secondary btn-lg' data-id='" +
+    data._id +
+    "' id='deletecomment'>Delete Comment</button>")
 
     if (data.comment) {
       console.log(data.comment.title);
@@ -26,11 +30,33 @@ $(document).on("click", "#comment", function() {
   });
 });
 
+// Save comment
 $(document).on("click", "#savecomment", function() {
   var thisId = $(this).attr("data-id");
 
   $.ajax({
     method: "POST",
+    url: "/" + thisId,
+    data: {
+      title: $("#titleinput").val(),
+      body: $("#bodyinput").val()
+    }
+  }).then(function(data) {
+    console.log(data);
+    $("#comments").empty();
+  });
+
+  $("#titleinput").val("");
+  $("#bodyinput").val("");
+});
+
+
+// Delete comment
+$(document).on("click", "#deletecomment", function() {
+  var thisId = $(this).attr("data-id");
+
+  $.ajax({
+    method: "DELETE",
     url: "/" + thisId,
     data: {
       title: $("#titleinput").val(),

@@ -61,7 +61,7 @@ module.exports = function(app, cheerio, axios) {
       });
   });
 
-  // A POST route for saving/updating a specific article's associated note
+  // A POST route for saving/updating a specific article's associated comment
   app.post("/:id", function(req, res) {
     db.Comment.create(req.body).then(function(dbComment) {
       db.Article.findOneAndUpdate(
@@ -78,17 +78,19 @@ module.exports = function(app, cheerio, axios) {
     });
   });
 
-  app.delete("/clear", function(req, res) {
-      db.Article.remove({}, function(err, data) {
-          if (err) {
-              console.log(err)
-          } else {
-              res.json(data)
-          }
-      }).then(function(response) {
-          res.json(response)
-      }).catch(function(err) {
-          res.json(err);
+  // A DELETE route for deleting a specific article's associated comment
+  app.delete("/:id", function(req, res) {
+    console.log(req.body)
+      db.Comment.remove(req.body).then(function(dbComment) {
+        db.Article.findOneAndRemove(
+          { _id: req.params.id }
+        ).then(function(dbComment) {
+          res.json(dbComment)
+        }).catch(function(err) {
+          res.json(dbComment);
+        })
       })
   })
+
+  // A GET route to displaying all comments
 };
