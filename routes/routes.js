@@ -79,13 +79,12 @@ module.exports = function(app, cheerio, axios) {
   });
 
   // A DELETE route for deleting a specific article's associated comment
-  app.get("/:id", function(req, res) {
-    console.log(req.body)
-    console.log(req.params.id);
-    db.Article.remove({"comment.title":req.body.title}).then(function(dbComment) {
-      res.json(dbComment)
-    }).catch(function(err) {
-      res.json(err)
+  app.delete("/:id", function(req, res) {
+    console.log(req.body) // This is the title and body of comment
+    console.log(req.params.id); // This is the id of the article
+    db.Article.findOne({ _id:req.params.id }, function(err, data){
+      console.log(data.comment); // This is the comment id
+      db.Comment.findByIdAndRemove({ _id: data.comment });
     })
       // db.Comment.remove(req.body).then(function(dbComment) {
       //   db.Article.findOneAndRemove(

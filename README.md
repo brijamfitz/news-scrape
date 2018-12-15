@@ -1,5 +1,10 @@
 # Onion Scrape
 
+## Current Limitations:
+* A new scrape appends articles to the bottom of the list. I want to drop the collection first and then display a new scrape of articles, rather than add to the old list
+* Does not display all comments - only the most current
+* Delete button is not fully functioning
+
 Experience here: [Onion Scrape](https://murmuring-sands-38119.herokuapp.com/)
 
 ![image](public/images/onionscrape-screenshot.png)
